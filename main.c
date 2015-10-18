@@ -78,17 +78,13 @@ int main(int argc, char *argv[])
 
 	if(argc != 2)
 		return 1;
-	Uint8 r = 0;
 	SDL_Surface *img;
 	init_sdl();
 	img = load_image(argv[1]);
+	int M[img->h * img->w];
 	display_image(img);
 	grey_scale(img);
 	display_image(img);
-	SDL_GetRGB(getpixel(img,0,0), img->format,&r,&r,&r);
-	printf("%zu \n",r);
-	integral_img(img);
+	integral_img(img, M);
 	display_image(img);
-	SDL_GetRGB(getpixel(img,0,0), img->format,&r,&r,&r);
-        printf("%zu \n",r);
 }
