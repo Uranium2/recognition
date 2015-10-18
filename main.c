@@ -5,7 +5,7 @@
 # include <err.h>
 //# include image treatment
 # include "grey_scale.h"
-//# include "integral_img.h"
+# include "integral_img.h"
 
 //# include else
 //
