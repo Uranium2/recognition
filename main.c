@@ -4,12 +4,28 @@
 # include <SDL_image.h>
 # include <err.h>
 //# include image treatment
-//# include "grey_sclale.h"
+# include "grey_scale.h"
 //# include "integral_img.h"
 
 //# include else
 //
 //
+
+void wait_for_keypressed(void) {
+  SDL_Event             event;
+  // Infinite loop, waiting for event
+  for (;;) {
+    // Take an event
+    SDL_PollEvent( &event );
+    // Switch on event type
+    switch (event.type) {
+    // Someone pressed a key -> leave the function
+    case SDL_KEYDOWN: return;
+    default: break;
+    }
+  // Loop until we got the expected event
+  }
+}
 
 void init_sdl(void)
 {
@@ -51,7 +67,7 @@ SDL_Surface* display_image(SDL_Surface *img)
 	SDL_UpdateRect(screen, 0, 0, img->w, img->h);
 
 	// wait for a key
-//	wait_for_keypressed();
+	wait_for_keypressed();
 
 	// return the screen for further uses
 	return screen;
@@ -65,6 +81,8 @@ int main(int argc, char *argv[])
 	SDL_Surface *img;
 	init_sdl();
 	img = load_image(argv[1]);
+	display_image(img);
+	grey_scale(img);
 	display_image(img);
 
 }

@@ -2,9 +2,9 @@
 # include <stdio.h>
 # include <SDL.h>
 # include <SDL_image.h>
-# include "pixel_operation.h"
+# include "pixel_operations.h"
 
-void grey_sacle(SDL_Surface *img)
+void grey_scale(SDL_Surface *img)
 {
 	for(int i = 0 ; i < img->w; i++)
 	{
