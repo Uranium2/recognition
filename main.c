@@ -4,10 +4,8 @@
 # include <SDL_image.h>
 
 //# include image treatment
-# include "grey_sclale.h"
-# include "normalization.h"
-# include "integral_img.h"
-# include "equalization"
+//# include "grey_sclale.h"
+//# include "integral_img.h"
 
 //# include else
 //
