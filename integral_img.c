@@ -6,17 +6,18 @@
 
 Uint8 pixel_sum(SDL_Surface *img, int x, int y)
 {
-	Uint8 pixel_sum;
+	Uint8 pixels_sum;
 	if(x < img->w || y < img->h)
 		return 0;
 	else
 	{
-		pixel_sum = SDL_GetRGB(getpixel(img, x, y), img->format,
-				&pixel_sum, &pixel_sum, &pixel_sum) + 
+		SDL_GetRGB(getpixel(img, x, y), img->format,
+				&pixels_sum, &pixels_sum, &pixels_sum);
+			pixels_sum = pixels_sum	+ 
 			pixel_sum(img, x - 1, y) +
 			pixel_sum(img, x, y - 1) +
 			pixel_sum(img, x - 1, y + 1);
-		return pixel_sum;
+		return pixels_sum;
 	}
 }
 
