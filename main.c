@@ -8,7 +8,7 @@
 # include "integral_img.h"
 
 //# include else
-//
+#include"pixel_operations.h"
 //
 
 void wait_for_keypressed(void) {
@@ -75,14 +75,20 @@ SDL_Surface* display_image(SDL_Surface *img)
 
 int main(int argc, char *argv[])
 {
+
 	if(argc != 2)
 		return 1;
-
+	Uint8 r = 0;
 	SDL_Surface *img;
 	init_sdl();
 	img = load_image(argv[1]);
 	display_image(img);
 	grey_scale(img);
 	display_image(img);
-
+	SDL_GetRGB(getpixel(img,0,0), img->format,&r,&r,&r);
+	printf("%zu \n",r);
+	integral_img(img);
+	display_image(img);
+	SDL_GetRGB(getpixel(img,0,0), img->format,&r,&r,&r);
+        printf("%zu \n",r);
 }
