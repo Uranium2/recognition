@@ -85,7 +85,7 @@ int main(int argc, char *argv[])
 	display_image(img);
 	grey_scale(img);
 	SDL_GetRGB(getpixel(img,1,1), img->format, &test, &test, &test);
-	printf("%zu \n",test);
+	printf("%hhu \n",test);
 	display_image(img);
 	integral_img(img);
 }
