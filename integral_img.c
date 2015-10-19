@@ -14,8 +14,8 @@ void integral_img(SDL_Surface *img)
 	}
 	int sum_int = 0;
 	Uint8 sum = 0;
-	for(int i = 0; i < img->h;i++){
-		for(int j = 0; j < 274;j++){
+	for(int i = 0; i < img->w;i++){
+		for(int j = 0; j < img->h;j++){
 			SDL_GetRGB(getpixel(img,i,j), img->format, &sum, &sum, &sum);
 
 			if(i == 0 && j == 0)
@@ -28,7 +28,7 @@ void integral_img(SDL_Surface *img)
 				sum_int = (int)sum + M[i-1][j] + M[i][j-1] - M[i-1][j-1];
 			M[i][j] = sum_int;
 
-			printf("i=%d j=%d img%dx%d sum_int=%d\n ",i,j, img->h, img->w, sum_int);
+			printf("| %5d ",sum_int);
 		}
 		printf("|\n");
 	}
