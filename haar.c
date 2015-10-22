@@ -30,25 +30,21 @@ int* haar(int **M, SDL_Surface *img)
 	float scale = 1;
 	while(scale * 24 <= img->w || scale * 24 <= img->h)
 	{
-		for(int i = 0; i < img->w; i = i +(24 * scale))
+		for(int i = 0; i < img->w ; i++)
 		{
-			for(int j = 0; j < img->h; j = j+ ( 24 * scale))
+			for(int j = 0; j < img->h - (scale*24); j++)
 			{
 				M_Haar[x] = Haar_feature_1(i, j, scale, M);
 				x++;
-			
 				M_Haar[x] = Haar_feature_2(i, j, scale, M);
 				x++;
-				
 				M_Haar[x] = Haar_feature_3(i, j, scale, M);	
 				x++;
-				
 				M_Haar[x] = Haar_feature_4(i, j, scale, M);
 				x++;
-			
 				M_Haar[x] = Haar_feature_5(i, j, scale, M);
 				x++;
-			
+				printf("x = %d i %d j %d scale %f \n",x, i,j, scale);
 			}
 		}
 		scale = scale * 1.25 ;
