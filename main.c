@@ -89,8 +89,9 @@ int main(int argc, char *argv[])
 	display_image(img);
 	M = integral_img(img);
 	M_Haar = haar(M, img);
-	for(int i = 0; i < 5000; i++)
+	for(int i = 0; i < 5; i++)
 	{
 		printf("| %d", M_Haar[i]);
 	}
+		printf(" | \n");
 }
