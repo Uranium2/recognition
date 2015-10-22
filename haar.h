@@ -1,19 +1,12 @@
 # include <stdlib.h>
 # include <stdio.h>
+# include <SDL.h>
+# include <SDL_image.h>
 
-typedef struct Haar_feature Haar;
+int Haar_feature_1 (int x, int y, int scale, int **M);
+int Haar_feature_2 (int x, int y, int scale, int **M);
+int Haar_feature_3 (int x, int y, int scale, int **M);
+int Haar_feature_4 (int x, int y, int scale, int **M);
+int Haar_feature_5 (int x, int y, int scale, int **M);
 
-struct Haar
-{
-        int feature; //nb au feature
-        int value;
-}
-
-typedef struct Haar_feature_list Haar_list;
-
-struct Haar_list
-{
-        Haar_feature data;
-        Haar_list *next;
-}
-
+int* haar(int **M, SDL_Surface *img);
