@@ -8,7 +8,8 @@
 # include "integral_img.h"
 
 //# include else
-#include"pixel_operations.h"
+# include "pixel_operations.h"
+# include "haar.h"
 //
 
 void wait_for_keypressed(void) {
@@ -74,19 +75,22 @@ SDL_Surface* display_image(SDL_Surface *img)
 }
 
 int** M;
+int* M_Haar;
 int main(int argc, char *argv[])
 {
 
 	if(argc != 2)
 		return 1;
-	Uint8 test;
 	SDL_Surface *img;
 	init_sdl();
 	img = load_image(argv[1]);
 	display_image(img);
 	grey_scale(img);
-	SDL_GetRGB(getpixel(img,1,1), img->format, &test, &test, &test);
-	printf("%hhu \n",test);
 	display_image(img);
 	M = integral_img(img);
+	M_Haar = haar(M, img);
+	for(int i = 0; i < 5000; i++)
+	{
+		printf("| %d", M_Haar[i]);
+	}
 }
