@@ -73,6 +73,7 @@ SDL_Surface* display_image(SDL_Surface *img)
 	return screen;
 }
 
+int** M;
 int main(int argc, char *argv[])
 {
 
@@ -87,5 +88,5 @@ int main(int argc, char *argv[])
 	SDL_GetRGB(getpixel(img,1,1), img->format, &test, &test, &test);
 	printf("%hhu \n",test);
 	display_image(img);
-	integral_img(img);
+	M = integral_img(img);
 }

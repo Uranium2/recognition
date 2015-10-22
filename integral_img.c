@@ -4,7 +4,7 @@
 # include <SDL_image.h>
 # include "pixel_operations.h"
 
-void integral_img(SDL_Surface *img)
+int** integral_img(SDL_Surface *img)
 {
 	int** M;
 	M = malloc(img->w * sizeof(int*));
@@ -28,13 +28,9 @@ void integral_img(SDL_Surface *img)
 				sum_int = (int)sum + M[i-1][j] + M[i][j-1] - M[i-1][j-1];
 			M[i][j] = sum_int;
 
-			printf("| %5d ",sum_int);
+			//printf("| %5d ",sum_int);
 		}
-		printf("|\n");
+		//printf("|\n");
 	}
+	return M;
 }
-
-//Uint32 integral_img(SDL_Surface *img, unsigned x, unsigned y, unsigned width, unsigned height)
-//{
-//	return 0;
-//}
