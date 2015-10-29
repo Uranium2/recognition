@@ -26,28 +26,38 @@ int Haar_feature_5 (int x, int y, int scale, int **M){
 int* haar(int **M, SDL_Surface *img)
 {
 	int* M_Haar = malloc(sizeof(int) * 170000);
-	int x = 0;
 	float scale = 1;
-	while(scale * 24 <= img->w || scale * 24 <= img->h)
+	int x = 0;
+
+	for(float size_box = 24; size_box <= img->h || size_box <= img->w; size_box = size_box * 1.25) // size of box
 	{
-		for(int i = 0; i < img->w ; i++)
+		for(int xb = 0; xb + size_box <= img->w; xb++) // Moving box X
 		{
-			for(int j = 0; j < img->h - (scale*24); j++)
+			for(int yb = 0; yb + size_box <= img->h; yb++) // Moving box Y
 			{
-				M_Haar[x] = Haar_feature_1(i, j, scale, M);
-				x++;
-				M_Haar[x] = Haar_feature_2(i, j, scale, M);
-				x++;
-				M_Haar[x] = Haar_feature_3(i, j, scale, M);	
-				x++;
-				M_Haar[x] = Haar_feature_4(i, j, scale, M);
-				x++;
-				M_Haar[x] = Haar_feature_5(i, j, scale, M);
-				x++;
-				printf("x = %d i %d j %d scale %f \n",x, i,j, scale);
+				for(float size_haar = 24; size_haar <= size_box; size_haar = size_haar * 1.25 ) // size of haar feature (smallest 24*24)
+				{
+					for(int xh = 0; xh + size_haar <= size_box; xh++) // Moving Haar 1,2,3,4,5 in X in the box
+					{
+						for(int yh = 0; yh + size_haar <= size_box; yh++) // Moving Haar 1,2,3,4,5 in Y in the box
+						{
+							printf("size_box=%f xb=%d yb=%d size_haar=%f xh=%d yh=%d scale=%f x=%d\n",size_box, xb, yb, size_haar, xh, yh, scale, x);
+							M_Haar[x] = Haar_feature_1(xh, yh, 1, M);
+							x++;
+							M_Haar[x] = Haar_feature_2(xh, yh, 1, M);
+							x++;
+							M_Haar[x] = Haar_feature_3(xh, yh, 1, M);
+							x++;
+							M_Haar[x] = Haar_feature_4(xh, yh, 1, M);
+							x++;
+							M_Haar[x] = Haar_feature_5(xh, yh, 1, M);
+							x++;
+						}
+					}
+					scale = scale * 1.25;
+				}
 			}
 		}
-		scale = scale * 1.25 ;
 	}
 	return M_Haar;
 }
