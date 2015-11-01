@@ -52,7 +52,7 @@ HaarF haar5(HaarF haar, int **M){
 	return haar;
 }
 
-HaarF* HaarFeatures(int **M, HaarF *HaarList)
+void HaarFeatures(int **M, HaarF *HaarList)
 {
 	int featureSize[5][2] = {{2,1},{1,2},{3,1},{1,3},{2,2}};	
 	int counter = 0;
@@ -93,7 +93,7 @@ HaarF* HaarFeatures(int **M, HaarF *HaarList)
 							haar = haar5(haar,M);
 						}
 						//printf("testx = %d, testy = %d w = %d, h = %d \n",haar.x+haar.w, haar.y + haar.h, haar.w, haar.h);
-						printf("| %d ", haar.val);						
+						//printf("| %d ", haar.val);						
 						*HaarList = haar;
 						HaarList++;
 						counter++;
@@ -109,7 +109,7 @@ HaarF* HaarFeatures(int **M, HaarF *HaarList)
 			haar.y += 1;
 		}
 	}
-	printf("|\n");
+	//printf("|\n");
 	printf("%d \n", counter);        
-	return HaarList;
+	//return HaarList;
 }

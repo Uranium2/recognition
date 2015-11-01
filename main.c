@@ -76,11 +76,13 @@ SDL_Surface* display_image(SDL_Surface *img)
 
 int** M;
 HaarF* List_Haar;
+HaarF* begin;
 int counter = 0;
 int main(int argc, char *argv[])
 {
 	List_Haar = malloc(sizeof(HaarF)* 163000);
-
+/*	for(int i = 0; i < 130000;i++) printf("| %d ", List_Haar[i].val);
+		printf("| \n");*/
 	if(argc != 2)
 		return 1;
 	SDL_Surface *img;
@@ -89,8 +91,10 @@ int main(int argc, char *argv[])
 	display_image(img);
 	grey_scale(img);
 	display_image(img);
-	M = integral_img(img);	
-	List_Haar = HaarFeatures(M, List_Haar);
-	/*	for(int i = 0; i < 160000;i++) printf("| %d ", List_Haar[i].val);
-		printf("| \n");*/
+	M = integral_img(img);
+	begin = List_Haar;	
+	HaarFeatures(M, List_Haar);
+	List_Haar = begin;
+		for(int i = 0; i < 136656;i++) printf("| %d ", List_Haar[i].val);
+		printf("| \n");
 }
