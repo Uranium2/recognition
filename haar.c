@@ -4,21 +4,23 @@
 # include <SDL_image.h>
 # include "haar.h"
 
-void haar1(HaarF haar, int **M){
+HaarF haar1(HaarF haar, int **M){
 	haar.val = M[haar.x][haar.y] - M[haar.x][haar.y + haar.h] 
 		- 2 * M[haar.x + (haar.w)/2][haar.y] 
 		+ 2 * M[haar.x + (haar.w)/2][haar.y + haar.h] 
 		+ M[haar.x + haar.w][haar.y] 
 		- M[haar.x + haar.w][haar.y + haar.h];
+return haar;
 }
-void haar2(HaarF haar, int **M){
+HaarF haar2(HaarF haar, int **M){
 	haar.val = M[haar.x][haar.y] - M[haar.x + haar.w][haar.y] 
 		+ 2 * M[haar.x + haar.w][haar.y + (haar.h)/2] 
 		- M[haar.x + haar.w][haar.y + haar.h] 
 		+ M[haar.x][haar.y + haar.h] 
 		- 2 * M[haar.x][haar.y + (haar.h)/2];
+return haar;
 }
-void haar3(HaarF haar, int **M){
+HaarF haar3(HaarF haar, int **M){
 	haar.val = M[haar.x][haar.y] - 2 * M[haar.x + (haar.w)/3][haar.y] 
 		+ 2 * M[haar.x + ((haar.w)/3)*2][haar.y] 
 		- M[haar.x + haar.w][haar.y] 
@@ -26,8 +28,9 @@ void haar3(HaarF haar, int **M){
 		- 2 * M[haar.x + ((haar.w)/3)*2][haar.y + haar.h] 
 		+ 2 * M[haar.x + (haar.w)/3][haar.y + haar.h] 
 		- M[haar.x][haar.y + haar.h];
+return haar;
 }
-void haar4(HaarF haar, int **M){
+HaarF haar4(HaarF haar, int **M){
 	haar.val = -M[haar.x][haar.y] + M[haar.x + haar.w][haar.y]
 		- 2 * M[haar.x + haar.w][haar.y + (haar.h)/3]
 		+ 2 *  M[haar.x + haar.w][haar.y + ((haar.h)/3)*2]
@@ -35,8 +38,9 @@ void haar4(HaarF haar, int **M){
 		+ M[haar.x][haar.y + haar.h]
 		- 2 * M[haar.x][haar.y + ((haar.h)/3)*2]
 		+ 2 * M[haar.x][haar.y + (haar.h)/3];
+return haar;
 }
-void haar5(HaarF haar, int **M){
+HaarF haar5(HaarF haar, int **M){
 	haar.val = -M[haar.x][haar.y] + 2 * M[haar.x + (haar.w)/2][haar.y]
 		- M[haar.x + haar.w][haar.y]
 		+ 2 * M[haar.x + haar.w][haar.y + (haar.h)/2]
@@ -45,12 +49,13 @@ void haar5(HaarF haar, int **M){
 		- M[haar.x][haar.y + haar.h]
 		+ 2 * M[haar.x][haar.y + (haar.h)/2]
 		- 4 * M[haar.x + (haar.w)/2][haar.y + (haar.h)/2];
+return haar;
 }
 
 HaarF* HaarFeatures(int **M, HaarF *HaarList)
 {
 	int featureSize[5][2] = {{2,1},{1,2},{3,1},{1,3},{2,2}};	
-
+	int counter = 0;
 	for(int featType = 0; featType < 5; featType++){
 
 		HaarF haar;
@@ -62,27 +67,31 @@ HaarF* HaarFeatures(int **M, HaarF *HaarList)
 		haar.w = w;
 		haar.h = h;
 
-		while (haar.y + haar.h <= 24){
+		while (haar.y + haar.h <= 24 ){
 			while (haar.x + haar.w <= 24){
-				while (haar.h + haar.y <= 24){
-					while (haar.w + haar.x <= 24){
+				while (haar.y + haar.h <= 24){
+					while (haar.x + haar.w <= 23){
+						
 						if (featType == 0){
-							haar1(haar,M);
+							haar = haar1(haar,M);
 						}
 						else if (featType == 1){
-							haar2(haar,M);
+							haar = haar2(haar,M);
 						}
 						else if (featType == 2){
-							haar3(haar,M);
+							haar = haar3(haar,M);
 						}
 						else if (featType == 3){
-							haar4(haar,M);
+							haar = haar4(haar,M);
 						}
 						else if (featType == 4){
-							haar5(haar,M);
+							haar = haar5(haar,M);
 						}
-						*HaarList = haar;
+						//printf("testx = %d, testy = %d w = %d, h = %d \n",haar.x+haar.w, haar.y + haar.h, haar.w, haar.h);
+printf(" | %d ", haar.val);						
+*HaarList = haar;
 						HaarList++;
+						counter++;
 						haar.w += w; 
 					}
 					haar.h += h;
@@ -94,6 +103,8 @@ HaarF* HaarFeatures(int **M, HaarF *HaarList)
 			haar.x = 1;
 			haar.y += 1;
 		}
-	}        
+	}
+printf(" | \n");
+printf("%d \n", counter);        
 return HaarList;
 }
