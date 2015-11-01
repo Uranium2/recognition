@@ -28,9 +28,9 @@ int** integral_img(SDL_Surface *img)
 				sum_int = (int)sum + M[i-1][j] + M[i][j-1] - M[i-1][j-1];
 			M[i][j] = sum_int;
 
-			//printf("| %5d ",sum_int);
+	//		printf("|%6d",sum_int);
 		}
-		//printf("|\n");
+	//	printf("|\n");
 	}
 	return M;
 }

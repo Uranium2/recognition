@@ -13,19 +13,19 @@
 //
 
 void wait_for_keypressed(void) {
-  SDL_Event             event;
-  // Infinite loop, waiting for event
-  for (;;) {
-    // Take an event
-    SDL_PollEvent( &event );
-    // Switch on event type
-    switch (event.type) {
-    // Someone pressed a key -> leave the function
-    case SDL_KEYDOWN: return;
-    default: break;
-    }
-  // Loop until we got the expected event
-  }
+	SDL_Event             event;
+	// Infinite loop, waiting for event
+	for (;;) {
+		// Take an event
+		SDL_PollEvent( &event );
+		// Switch on event type
+		switch (event.type) {
+			// Someone pressed a key -> leave the function
+			case SDL_KEYDOWN: return;
+			default: break;
+		}
+		// Loop until we got the expected event
+	}
 }
 
 void init_sdl(void)
@@ -76,6 +76,7 @@ SDL_Surface* display_image(SDL_Surface *img)
 
 int** M;
 HaarF* List_Haar;
+int counter = 0;
 int main(int argc, char *argv[])
 {
 	List_Haar = malloc(sizeof(HaarF)* 163000);
@@ -88,8 +89,8 @@ int main(int argc, char *argv[])
 	display_image(img);
 	grey_scale(img);
 	display_image(img);
-	M = integral_img(img);
+	M = integral_img(img);	
 	List_Haar = HaarFeatures(M, List_Haar);
-/*	for(int i = 0; i < 160000;i++) printf("| %d ", List_Haar[i].val);
-	printf("| \n");*/
+	/*	for(int i = 0; i < 160000;i++) printf("| %d ", List_Haar[i].val);
+		printf("| \n");*/
 }
