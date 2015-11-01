@@ -21,10 +21,10 @@ struct HaarF
 
 #endif
 
-void haar1(HaarF *haar, int **M);
-void haar2(HaarF *haar, int **M);
-void haar3(HaarF *haar, int **M);
-void haar4(HaarF *haar, int **M);
-void haar5(HaarF *haar, int **M);
+void haar1(HaarF haar, int **M);
+void haar2(HaarF haar, int **M);
+void haar3(HaarF haar, int **M);
+void haar4(HaarF haar, int **M);
+void haar5(HaarF haar, int **M);
 
-void HaarFeatures(int **M, HaarF *HaarList);
+HaarF* HaarFeatures(int **M, HaarF *HaarList);
