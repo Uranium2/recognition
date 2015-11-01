@@ -75,7 +75,7 @@ SDL_Surface* display_image(SDL_Surface *img)
 }
 
 int** M;
-int* M_Haar;
+HaarF* List_Haar;
 int main(int argc, char *argv[])
 {
 
@@ -88,10 +88,5 @@ int main(int argc, char *argv[])
 	grey_scale(img);
 	display_image(img);
 	M = integral_img(img);
-	M_Haar = haar(M, img);
-	for(int i = 0; i < 10425; i++)
-	{
-		printf("| %d", M_Haar[i]);
-	}
-		printf(" | \n");
+	List_Haar = HaarFeatures(M);
 }
