@@ -15,7 +15,7 @@ all: main
 main: ${OBJ}
  
 clean:
-	rm -f *~ *.o
+	rm -f *~ *.o *.swp
 	rm -f main
  
 # END
