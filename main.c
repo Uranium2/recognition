@@ -78,7 +78,7 @@ int** M;
 HaarF* List_Haar;
 int main(int argc, char *argv[])
 {
-	List_Haar = malloc(sizeof(HaarF)* 170000);
+	List_Haar = malloc(sizeof(HaarF)* 163000);
 
 	if(argc != 2)
 		return 1;
@@ -90,6 +90,6 @@ int main(int argc, char *argv[])
 	display_image(img);
 	M = integral_img(img);
 	List_Haar = HaarFeatures(M, List_Haar);
-	for(int i =0; i < 750000; i++) printf(" | %d", List_Haar[i].val);
-	printf(" | \n");
+/*	for(int i = 0; i < 160000;i++) printf("| %d ", List_Haar[i].val);
+	printf("| \n");*/
 }
