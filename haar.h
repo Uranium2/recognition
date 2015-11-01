@@ -27,4 +27,4 @@ void haar3(HaarF *haar, int **M);
 void haar4(HaarF *haar, int **M);
 void haar5(HaarF *haar, int **M);
 
-void HaarFeatures(int **M);
+void HaarFeatures(int **M, HaarF *HaarList);

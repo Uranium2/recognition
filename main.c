@@ -88,5 +88,6 @@ int main(int argc, char *argv[])
 	grey_scale(img);
 	display_image(img);
 	M = integral_img(img);
-	List_Haar = HaarFeatures(M);
+	HaarFeatures(M, List_Haar);
+	for(int i =0; i < 160000; i++) printf("%d \n", List_Haar[i].val);
 }
