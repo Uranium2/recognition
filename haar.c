@@ -97,8 +97,8 @@ void HaarFeatures(int **M, HaarF *HaarList)
 							haar = haar5(haar,M);
 							counter4++;						
 						}
-						//printf("testx = %d, testy = %d w = %d, h = %d \n",haar.x+haar.w, haar.y + haar.h, haar.w, haar.h);
-						//printf("| %d ", haar.val);						
+						//printf("testx = %d, testy = %d \n",haar.w, haar.h);
+						printf("| %d ", haar.val);						
 						*HaarList = haar;
 						HaarList++;
 						counter++;
@@ -114,7 +114,8 @@ void HaarFeatures(int **M, HaarF *HaarList)
 			haar.y += 1;
 		}
 	}
-	//printf("|\n");
-	printf("%d, %d, %d, %d, %d, %d \n", counter, counter0, counter1, counter2, counter3, counter4);        
+	printf("|\n");
+	//printf("%d \n", counter);
+	printf(" Nb of features: %d \n Features 1: %d \n Features 2: %d \n Features 3: %d \n Features 4: %d \n Features 5: %d \n", counter, counter0, counter1, counter2, counter3, counter4);        
 	//return HaarList;
 }

@@ -10,6 +10,7 @@
 //# include else
 # include "pixel_operations.h"
 # include "haar.h"
+# include "add.h"
 //
 
 void wait_for_keypressed(void) {
@@ -92,9 +93,11 @@ int main(int argc, char *argv[])
 	grey_scale(img);
 	display_image(img);
 	M = integral_img(img);
+	wait_for_keypressed();
 	begin = List_Haar;	
 	HaarFeatures(M, List_Haar);
 	List_Haar = begin;
 		//for(int i = 0; i < 136656;i++) printf("| %d ", List_Haar[i].val);
 		//printf("| \n");
+//	add("test2.png", "/Test");
 }

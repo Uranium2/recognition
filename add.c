@@ -2,23 +2,24 @@
 #include <stdio.h>
 #include <err.h>
 #include <dirent.h>
+#include <string.h>
 
-int add(char* pathImg , char* pathBdd){
-  DIR* testBdd = NULL;
+void add(char* pathImg , char* pathBdd){
+  
+DIR* testBdd = NULL;
   testBdd = opendir(pathBdd);
   if(testBdd == NULL){
-    printf("Wrong path for Data base");
+    printf("Wrong path for Data base \n");
     closedir(testBdd);
-    return 1;
+    return;
   }
   char* ext = strchr(pathImg,'.');
   if( strcmp(ext,"pgm")||strcmp(ext,"bmp")||strcmp(ext,"jpeg")||strcmp(ext,"jpg")||strcmp(ext,"png")){
     system("mv pathImg pathBdd");
     closedir(testBdd);
-    return 0;
   }
-  printf("Image's format isn't supported");
-  closedr(testBdd);
-  return 1;
+  printf("Image's format isn't supported \n");
+  closedir(testBdd);
+  return;
 }
       
