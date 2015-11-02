@@ -95,6 +95,6 @@ int main(int argc, char *argv[])
 	begin = List_Haar;	
 	HaarFeatures(M, List_Haar);
 	List_Haar = begin;
-		for(int i = 0; i < 136656;i++) printf("| %d ", List_Haar[i].val);
-		printf("| \n");
+		//for(int i = 0; i < 136656;i++) printf("| %d ", List_Haar[i].val);
+		//printf("| \n");
 }

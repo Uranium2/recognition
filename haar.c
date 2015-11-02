@@ -55,13 +55,13 @@ HaarF haar5(HaarF haar, int **M){
 void HaarFeatures(int **M, HaarF *HaarList)
 {
 	int featureSize[5][2] = {{2,1},{1,2},{3,1},{1,3},{2,2}};	
-	int counter = 0;
+	int counter = 0, counter0 = 0, counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0;
 	HaarF haar;
 	/*haar.x = 0;
-	haar.y = 0;
-	haar.w = 23;
-	haar.h = 23;
-	haar = haar1(haar,M);*/
+	  haar.y = 0;
+	  haar.w = 23;
+	  haar.h = 23;
+	  haar = haar1(haar,M);*/
 	for(int featType = 0; featType < 5; featType++){
 
 		int w = featureSize[featType][0];
@@ -79,18 +79,23 @@ void HaarFeatures(int **M, HaarF *HaarList)
 
 						if (featType == 0){
 							haar = haar1(haar,M);
+							counter0++;
 						}
 						else if (featType == 1){
 							haar = haar2(haar,M);
+							counter1++;						
 						}
 						else if (featType == 2){
 							haar = haar3(haar,M);
+							counter2++;						
 						}
 						else if (featType == 3){
 							haar = haar4(haar,M);
+							counter3++;						
 						}
 						else if (featType == 4){
 							haar = haar5(haar,M);
+							counter4++;						
 						}
 						//printf("testx = %d, testy = %d w = %d, h = %d \n",haar.x+haar.w, haar.y + haar.h, haar.w, haar.h);
 						//printf("| %d ", haar.val);						
@@ -110,6 +115,6 @@ void HaarFeatures(int **M, HaarF *HaarList)
 		}
 	}
 	//printf("|\n");
-	printf("%d \n", counter);        
+	printf("%d, %d, %d, %d, %d, %d \n", counter, counter0, counter1, counter2, counter3, counter4);        
 	//return HaarList;
 }
