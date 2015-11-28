@@ -79,22 +79,27 @@ void HaarFeatures(int **M, HaarF *HaarList)
 
 						if (featType == 0){
 							haar = haar1(haar,M);
+							haar.type = 0;
 							counter0++;
 						}
 						else if (featType == 1){
 							haar = haar2(haar,M);
+							haar.type = 1;
 							counter1++;						
 						}
 						else if (featType == 2){
 							haar = haar3(haar,M);
+							haar.type = 2;
 							counter2++;						
 						}
 						else if (featType == 3){
 							haar = haar4(haar,M);
+							haar.type = 3;
 							counter3++;						
 						}
 						else if (featType == 4){
 							haar = haar5(haar,M);
+							haar.type = 4;
 							counter4++;						
 						}
 						//printf("testx = %d, testy = %d \n",haar.w, haar.h);

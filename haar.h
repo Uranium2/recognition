@@ -16,6 +16,7 @@ struct HaarF
 	int w;
 	int h;
 	int val;
+	int type;
 
 };
 

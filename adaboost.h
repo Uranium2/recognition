@@ -2,39 +2,31 @@
 # include <stdio.h>
 # include <SDL.h>
 # include <SDL_image.h>
+# include <dirent.h>
+# include "integral_img.h"
 
 #ifndef AdImage
 #define AdImage
 
-typedef struct AdImage AdImage;
-struct AdImage
-
-{
-	SDL_Surface *img;
-        float weight;
-        int val;
-	
-
+struct image {
+	int face;
+	struct HaarF *feat;
 };
 
-typedef struct WeakClassifier WC;
-struct WeakClassifier
+struct weakclass {
+	struct HaarF *feat;
+	int t; //threshold
+	int p; // polarity
+};
 
-{
-	double error;	
-	double threshold;
-	double parity;
+struct strongclass {
+	struct weakclass *wc;
+	float *alpha;
+	int nb;
+};
 
-}
+struct strongclass *adaboost(struct image *tab, unsigned int iter);
 
-typedef struct StrongClassifier SC;
-struct StrongClassifier 
-
-{
-	double theta;
-	int count;
-	double alpha;
-	
-}
+struct image *prepare_tab_image(int nb);
 #endif
 	
