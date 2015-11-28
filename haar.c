@@ -76,34 +76,33 @@ void HaarFeatures(int **M, HaarF *HaarList)
 			while (haar.x + haar.w < 24){
 				while (haar.y + haar.h < 24){
 					while (haar.x + haar.w < 24){
-
 						if (featType == 0){
 							haar = haar1(haar,M);
-							haar.type = 0;
+							haar.type = 1;
 							counter0++;
 						}
 						else if (featType == 1){
 							haar = haar2(haar,M);
-							haar.type = 1;
+							haar.type = 2;
 							counter1++;						
 						}
 						else if (featType == 2){
 							haar = haar3(haar,M);
-							haar.type = 2;
+							haar.type = 3;
 							counter2++;						
 						}
 						else if (featType == 3){
 							haar = haar4(haar,M);
-							haar.type = 3;
+							haar.type = 4;
 							counter3++;						
 						}
 						else if (featType == 4){
 							haar = haar5(haar,M);
-							haar.type = 4;
+							haar.type = 5;
 							counter4++;						
 						}
 						//printf("testx = %d, testy = %d \n",haar.w, haar.h);
-						printf("| %d ", haar.val);						
+						//printf("| %d ", haar.val);						
 						*HaarList = haar;
 						HaarList++;
 						counter++;
@@ -119,7 +118,7 @@ void HaarFeatures(int **M, HaarF *HaarList)
 			haar.y += 1;
 		}
 	}
-	printf("|\n");
+	//printf("|\n");
 	//printf("%d \n", counter);
 	printf(" Nb of features: %d \n Features 1: %d \n Features 2: %d \n Features 3: %d \n Features 4: %d \n Features 5: %d \n", counter, counter0, counter1, counter2, counter3, counter4);        
 	//return HaarList;
