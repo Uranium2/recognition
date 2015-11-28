@@ -33,7 +33,7 @@ struct image *prepare_tab_image( int nb) {
 	rep = opendir("./pos");
 
 	if (rep == NULL) {
-		printf("Erreur lors de la lecture du dossier pos");
+		printf("Fail reading pos folder");
 		exit(1);
 	}
 
@@ -49,7 +49,7 @@ struct image *prepare_tab_image( int nb) {
 			printf("test Grey\n");
 			M = integral_img(img);
 
-			struct HaarF *feat = malloc(sizeof(struct HaarF)* 163000);
+			struct HaarF *feat = malloc(sizeof(struct HaarF) * nb_feat);
 			printf("test Haar feat\n");
 			HaarFeatures(M, feat);
 			printf("test haar feat\n");
@@ -84,7 +84,7 @@ struct image *prepare_tab_image( int nb) {
 			grey_scale(img);
 			M = integral_img(img);
 			
-			struct HaarF *feat = malloc(sizeof(struct HaarF) * 163000);
+			struct HaarF *feat = malloc(sizeof(struct HaarF) * nb_feat);
 			HaarFeatures(M, feat);
 
 			tab_image[i].face = 0;
@@ -196,8 +196,9 @@ struct strongclass *adaboost(struct image *image_tab, unsigned int iter) {
 				int spl = sp(feat_t, threshold);
 				int smi = sm(feat_t, threshold);
 				int polarity = (spl > smi)?1:0;
-/*printf("mdr0\n");
+printf("mdr0\n");
 				temp_weak[i].feat->x = 0;// image_tab[0].feat[i].x;
+/*
 printf("mdr1\n");
 				temp_weak[i].feat->y = image_tab[0].feat[i].y;
 printf("mdr2\n");
