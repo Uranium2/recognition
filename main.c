@@ -15,20 +15,18 @@
 # include "adaboost.h"
 //
 
-int main(int argc, char *argv[])
+int main()
 {
-	if(argc != 2)
-		return 1;
 	struct image *i = prepare_tab_image(2);
 	if(i[0].feat) {
 		struct strongclass *strong = adaboost(i, 2);
 
 		for(int j = 0; j < 2; ++j) {
-			printf("%d ", strong->wc[j].f.type);
-			printf("%zu ", strong->wc[j].f.x);
-			printf("%zu ", strong->wc[j].f.y);
-			printf("%zu ", strong->wc[j].f.scale_x);
-			printf("%zu\n", strong->wc[j].f.scale_y);
+			printf("%d ", strong->wc[j].feat->type);
+			printf("%d ", strong->wc[j].feat->x);
+			printf("%d ", strong->wc[j].feat->y);
+			printf("%d ", strong->wc[j].feat->w);
+			printf("%d\n", strong->wc[j].feat->h);
 		}
 	}
 	
