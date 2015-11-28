@@ -190,14 +190,13 @@ struct strongclass *adaboost(struct image *image_tab, unsigned int iter) {
 				for(int j = 0; j < nb_pos + nb_neg; ++j) {
 					feat_t[j].face = image_tab[j].face;
 					feat_t[j].feat = image_tab[j].feat[i].val;
-					printf("mdr\n");
 				}
 				//exit(0);
 				int threshold = compute_threshold(feat_t);
 				int spl = sp(feat_t, threshold);
 				int smi = sm(feat_t, threshold);
 				int polarity = (spl > smi)?1:0;
-printf("mdr0\n");
+/*printf("mdr0\n");
 				temp_weak[i].feat->x = 0;// image_tab[0].feat[i].x;
 printf("mdr1\n");
 				temp_weak[i].feat->y = image_tab[0].feat[i].y;
@@ -211,12 +210,11 @@ printf("mdr5\n");
 				temp_weak[i].t = threshold;
 printf("mdr6\n");				
 				temp_weak[i].p = polarity;
-printf("mdr\n");
+printf("mdr\n");*/
 				error[i] = 0;
 				for(int j = 0; j < nb_pos + nb_neg; ++j) { 
 					error[i] += weight[j]*fabs((double) (compute_weakclass(threshold, polarity, image_tab[j].feat[i].val) - image_tab[j].face));
 				}
-printf("test ada loop end\n");
 			}
 
 			float min_error = error[0];
@@ -245,7 +243,7 @@ printf("test ada loop end\n");
 		}
 
 		strongclassifier->nb = iter;
-printf("test ada5\n");
+
 		free(feat_t);
 		free(weight);
 		free(temp_weak);

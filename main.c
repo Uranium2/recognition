@@ -22,6 +22,7 @@ int main()
 		struct strongclass *strong = adaboost(i, 2);
 
 		for(int j = 0; j < 2; ++j) {
+			printf("test final\n");
 			printf("%d ", strong->wc[j].feat->type);
 			printf("%d ", strong->wc[j].feat->x);
 			printf("%d ", strong->wc[j].feat->y);
