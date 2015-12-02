@@ -1,256 +1,140 @@
-# include <stdlib.h>
-# include <stdio.h>
-# include <SDL.h>
-# include <SDL_image.h>
-# include <dirent.h>
-# include <math.h>
-
-# include "integral_img.h"
 # include "adaboost.h"
-# include "quick_sort.h"
-# include "grey_scale.h"
-# include "sdl_stuff.h"
 # include "haar.h"
 
-static int compute_threshold(struct ada_feat *af);
-static int sp(struct ada_feat *af, int threshold);
-static int sm(struct ada_feat *af, int threshold);
-static int compute_weakclass(int threshold, int polarity, int features);
-
-int nb_feat = 136656;
-int nb_neg;
-int nb_pos;
-
-struct image *prepare_tab_image( int nb) {
-
-	struct image *tab_image = calloc(nb, sizeof(struct image));
-
-	int i = 0;
-	int** M; //tableau intégral image
-
-	DIR* rep = NULL;
-	struct dirent* file = NULL;
-	rep = opendir("./pos");
-
-	if (rep == NULL) {
-		printf("Fail reading pos folder");
-		exit(1);
-	}
-
-	printf("test\n");
-	while((file = readdir(rep)) != NULL) {
-		if(file->d_name[0] != '.' && file->d_name[1] != '.') {
-			char src[256] = "./pos/";
-			char *name = strcat(src, file->d_name);
-			SDL_Surface *img;
-			printf("test Load\n");
-			img = load_image(name);
-			grey_scale(img);
-			printf("test Grey\n");
-			M = integral_img(img);
-
-			struct HaarF *feat = malloc(sizeof(struct HaarF) * nb_feat);
-			printf("test Haar feat\n");
-			HaarFeatures(M, feat);
-			printf("test haar feat\n");
-			tab_image[i].face = 1;
-			printf("fin de boucle1\n");
-			tab_image[i].feat = feat;
-			printf("fin de boucle2\n");
-			++i;
-			nb_pos++;
-			printf("fin de boucle3\n");
-		}
-	}
-
-	if (closedir(rep) == -1)
-		exit(-1);
-
-	rep = NULL;
-	file = NULL;
-	rep = opendir("./neg");
-
-	if (rep == NULL) {
-		printf("Fail reading neg folder");
-		exit(1);
-	}
-
-	while((file = readdir(rep)) != NULL) {
-
-		if(file->d_name[0] != '.' && file->d_name[1] != '.') {
-			char src[256] = "./neg/";
-			char *name = strcat(src, file->d_name);
-			SDL_Surface *img = load_image(name);
-			grey_scale(img);
-			M = integral_img(img);
-			
-			struct HaarF *feat = malloc(sizeof(struct HaarF) * nb_feat);
-			HaarFeatures(M, feat);
-
-			tab_image[i].face = 0;
-			tab_image[i].feat = feat;
-
-			nb_neg++;
-			++i;
-		}
-	}
-
-	if (closedir(rep) == -1)
-		exit(-1);
-
-	free(M); // free integral image
-
-	printf("ok\n");
-	return tab_image;
-	printf("ok\n");
+double compute_tresh_min(struct image img) // liste d'image
+{
+	img.pos++; // FAUX A REMPLIR FIX ME
+	return 0;
+}
+double compute_tresh_max(struct image img)
+{
+	img.pos++; // FAUX A REMPLIR FIX ME
+	return 0;
 }
 
-int compute_weakclass(int threshold, int polarity, int features) {
-	if(polarity)
-		return (features < threshold)?1:0;
-	else
-		return (features > threshold)?1:0;
-}
+void DSES(int nb_img, struct image image, double treshold, double teta, double	epsilon, double marge)
+{
+	// INITIALISATION
+	treshold = compute_tresh_min(image) - 1;
+	marge = 0;
+	epsilon = 2;
 
-static int sp(struct ada_feat *feat_t, int threshold) {
-	int sp = 0;
-	for(int i = 0; feat_t[i].feat < threshold; i++) if(feat_t[i].face) sp++;
-	return sp;
-}
-
-static int sm(struct ada_feat *feat_t, int threshold) {
-	int sm = 0;
-	for(int i = 0; feat_t[i].feat < threshold; i++) if(!feat_t[sm].face) sm++;
-	return sm;
-}
-
-static int compute_threshold(struct ada_feat *feat_t) {
-	quickSort(feat_t, 0, (nb_neg+nb_pos)-1);
-
-	int threshold;
-	int *error = malloc((nb_neg+nb_pos)*sizeof(int));
-
-	for(int i = 0; i < nb_neg+nb_pos; ++i) {
-
-		threshold = feat_t[i].feat;
-
-		int error1 = sp(feat_t, threshold)+(nb_neg - sm(feat_t, threshold));
-		int error2 = sm(feat_t, threshold)+(nb_pos - sp(feat_t, threshold));
-
-		error[i] = (error1 < error2)?error1:error2;
-	}
-
-	int index = 0;
-	int min_error = error[0];
-	for(int i = 1; i < nb_neg+nb_pos; i++) {
-		if(error[i] < min_error) {
-			min_error = error[i];
-			index = i;
+	//sum pos weights + sum neg weights
+	int wpos_tp = 0;
+	int wpos_tm = 0;
+	int wneg_tp = 0;
+	int wneg_tm = 0;
+	for(int i = 0; i < nb_img/2; i++)
+	{
+		if(image.haar->val > treshold)
+		{	
+			image.weight = 1;
+			wpos_tp++;
+		}
+		else
+		{
+			image.weight = 0;
 		}
 	}
 
-	return feat_t[index].feat;
+	for(int i = 0; i < nb_img/2; i++)
+	{
+		if(image.haar->val > treshold)
+		{
+			image.weight = -1;
+			wneg_tp++;
+		}
+		else
+			image.weight = 0;
+
+	}
+
+	// set iteartor
+	int j = 0;
+	int Epsilon;
+	int Treshold = treshold;
+	int Marge = marge;
+	int error_p = 0;
+	int error_n = 0;
+	int Teta;
+
+	while(1)
+	{
+		error_p = wpos_tm + wneg_tp;
+		error_n = wpos_tp + wneg_tm;
+
+		if(error_p < error_n)
+		{
+			Epsilon = error_p;
+			Teta = 1;
+		}
+		else
+		{
+			Epsilon = error_n;
+			Teta = -1;
+		}
+
+		if((Epsilon < epsilon) || (Epsilon = epsilon && Marge == marge))
+		{
+			epsilon = Epsilon;
+			treshold = Treshold;
+			marge = Marge;
+			teta = Teta;
+		}
+
+		if(j == nb_img)
+			break;
+
+		j++;
+
+		while(1)
+		{
+			if(image.pos == -1) // Yij = -1 sur PDF
+			{
+				wneg_tm += image.weight;
+				wneg_tp -= image.weight;
+			}
+			else
+			{
+				wpos_tm += image.weight;
+				wpos_tp -= image.weight;
+			}
+
+			if((j == nb_img) || ( image.haar->val != image.haar->val)) // changer, image I != Image I + 1
+				break;
+			else
+				j++;
+		}
+
+		if(j == nb_img)
+		{
+			Treshold = compute_tresh_max(image); // add i or j ?
+			Marge = 0;
+		}
+		else
+		{
+			Treshold = image.haar->val + image.haar->val; // t = i + i+1 Cf PDF
+			Marge =  image.haar->val - image.haar->val; // same i+1 - i
+		}
+	}
 }
 
-struct strongclass *adaboost(struct image *image_tab, unsigned int iter) {
-	if(image_tab && (nb_neg+nb_pos) != 0) {
-		float *weight = malloc((nb_pos+nb_neg)*sizeof(float));
+void BStump(int nb_img,struct image image,int nb_feat)
+{
+	int error = 2;
+	double treshold = 0;
+	double teta = 0;
+	double margin = 0;	
+	double epsilon = 0;
+	double marge = 0;
 
-		struct strongclass *strongclassifier = malloc(sizeof(struct strongclass));
-		strongclassifier->wc = malloc(iter*sizeof(struct weakclass));
-		strongclassifier->alpha = malloc(iter*sizeof(float));
-
-		struct weakclass *temp_weak = malloc(nb_feat*sizeof(struct weakclass));
-
-		struct ada_feat *feat_t = malloc((nb_pos+nb_neg)*sizeof(struct ada_feat));
-
-		float *error = malloc(nb_feat*sizeof(float));
-
-		int i = 0;
-		for(; i < nb_pos; ++i) {
-			weight[i] = 1/nb_pos;
-		}
-		for(; i < nb_pos + nb_neg; ++i) {
-			weight[i] = 1/nb_neg;
-		}
-
-		for(unsigned int t = 0; t < iter; ++t) { //main ada loop
-
-			float sum = 0;//normalize weights
-			for(int j = 0; j < nb_pos + nb_neg; ++j) {
-				sum += weight[j];
-			}
-
-			for(int j = 0; j < nb_pos + nb_neg; ++j) {
-				weight[j] = weight[j]/sum;
-			}
-
-			for(i = 0; i < nb_feat; ++i) {
-
-				for(int j = 0; j < nb_pos + nb_neg; ++j) {
-					feat_t[j].face = image_tab[j].face;
-					feat_t[j].feat = image_tab[j].feat[i].val;
-				}
-				//exit(0);
-				int threshold = compute_threshold(feat_t);
-				int spl = sp(feat_t, threshold);
-				int smi = sm(feat_t, threshold);
-				int polarity = (spl > smi)?1:0;
-printf("mdr0\n");
-				temp_weak[i].feat->x = 0;// image_tab[0].feat[i].x;
-/*
-printf("mdr1\n");
-				temp_weak[i].feat->y = image_tab[0].feat[i].y;
-printf("mdr2\n");
-				temp_weak[i].feat->w = image_tab[0].feat[i].w; // scale_x
-printf("mdr3\n");
-				temp_weak[i].feat->h = image_tab[0].feat[i].h; // swap h and w? initialement scale_y ici
-printf("mdr4\n");				
-				temp_weak[i].feat->type = image_tab[0].feat[i].type;
-printf("mdr5\n");		
-				temp_weak[i].t = threshold;
-printf("mdr6\n");				
-				temp_weak[i].p = polarity;
-printf("mdr\n");*/
-				error[i] = 0;
-				for(int j = 0; j < nb_pos + nb_neg; ++j) { 
-					error[i] += weight[j]*fabs((double) (compute_weakclass(threshold, polarity, image_tab[j].feat[i].val) - image_tab[j].face));
-				}
-			}
-
-			float min_error = error[0];
-			int index = 0;
-			for(i = 1; i < nb_feat; ++i) {
-				if(error[i] < min_error) {
-					min_error = error[i]; 
-					index = i;
-				}
-			}
-
-			struct weakclass weakclassifier;
-			weakclassifier.feat = temp_weak[index].feat;
-			weakclassifier.t = temp_weak[index].t;
-			weakclassifier.p = temp_weak[index].p;
-
-			strongclassifier->wc[t] = weakclassifier;
-
-			float beta = min_error/(1 - min_error);
-
-			for(int j = 0; j < nb_pos + nb_neg; ++j) {
-				weight[j] = weight[j]*pow(beta, 1-((compute_weakclass(weakclassifier.t, weakclassifier.p, image_tab[j].feat[index].val) == image_tab[j].face)?0:1));
-			}
-
-			strongclassifier->alpha[t] = log10(1/beta);
-		}
-
-		strongclassifier->nb = iter;
-
-		free(feat_t);
-		free(weight);
-		free(temp_weak);
-		free(error);
-printf("it works\n");
-		return strongclassifier;
+	for(int i = 0; i < nb_feat; i++)
+	{
+		DSES(nb_img, image, treshold, teta, epsilon,  marge);
 	}
-	return NULL;
+
+
+
+
+
 }
