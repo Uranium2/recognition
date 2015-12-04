@@ -10,11 +10,11 @@ struct image{
 	int weight;
 	int pos; // 1 image is positive 0 is negative
 };
-double compute_tresh_min(struct image img);
+double compute_tresh_min(struct image *img);
 
-double compute_tresh_max(struct image img);
+double compute_tresh_max(struct image *img);
 
-void DSES(int nb_img, struct image image, double treshold, double teta, double      epsilon, double marge);
+void DSES(int nb_img, struct image *image, double treshold, double teta, double      epsilon, double marge);
 
 struct weakclass {
 	struct HaarF *feat;
