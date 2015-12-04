@@ -1,13 +1,10 @@
 #ifndef QUICKSORT_H
 #define QUICKSORT_H
+# include "adaboost.h"
+# include "haar.h"
 
-struct ada_feat {
-	int feat;
-	int face;
-};
+int part(struct image *img, int p, int r);
 
-int part(struct ada_feat *M, int p, int r);
-
-void quickSort(struct ada_feat *M, int p, int r);
+void quickSort(struct image *img, int p, int r);
 
 #endif

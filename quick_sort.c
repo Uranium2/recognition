@@ -1,27 +1,32 @@
-#include <stdlib.h>
-#include "quick_sort.h"
+# include <stdlib.h>
+# include "quick_sort.h"
 
-int part(struct ada_feat *tableau, int p, int r) {
-    int pivot = tableau[p].feat, i = p-1, j = r+1;
-    struct ada_feat temp;
-    while (1) {
-        do j--; while (tableau[j].feat > pivot);
-        do i++; while (tableau[i].feat < pivot);
-        if (i < j) {
-            temp = tableau[i];
-            tableau[i] = tableau[j];
-            tableau[j] = temp;
-        }
-        else
-            return j;
-    }
+int part(struct image *img, int p, int r)
+{
+	int pivot = img[p].haar->val, i = p-1, j =r+1;
+	struct image temp;
+	while(1)
+	{
+		do j--; while(img[j].haar->val > pivot);
+		do i++; while(img[i].haar->val < pivot);
+		if(i < j)
+		{
+			temp = img[i];
+			img[i] = img[j];
+			img[j] = temp;
+		}
+		else
+			return j;
+	}
 }
- 
-void quickSort(struct ada_feat *tableau, int p, int r) {
-    int q;
-    if (p < r) {
-        q = part(tableau, p, r);
-        quickSort(tableau, p, q);
-        quickSort(tableau, q+1, r);
-    }
+
+void quick_sort(struct image *img, int p, int r)
+{
+	int q;
+	if(p < r)
+	{
+		q = part(img, p, r);
+		quick_sort(img, p, q);
+		quick_sort(img, q+1, r);
+	}
 }
