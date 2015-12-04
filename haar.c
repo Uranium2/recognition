@@ -58,7 +58,6 @@ HaarF haar5(HaarF haar, int **M){
 	return haar;
 }
 
-
 int counter = 0, counter0 = 0, counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0;
 
 void HaarFeatures(int **M, HaarF *HaarList)
@@ -128,8 +127,10 @@ void HaarFeatures(int **M, HaarF *HaarList)
 
 	// Sort all the features in the Haarlist for one image
 	quick_sort(HaarList,0,counter0);
-	quick_sort(HaarList,counter0 + 1, counter1);
+	printf("quick sort 1 \n");
+/*	quick_sort(HaarList,counter0 + 1, counter1);
 	quick_sort(HaarList,counter1 + 1, counter2);
 	quick_sort(HaarList,counter2 + 1, counter3);
 	quick_sort(HaarList,counter3 + 1, counter4);
+*/
 }

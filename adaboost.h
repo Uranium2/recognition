@@ -15,7 +15,7 @@ double compute_tresh_min(struct image *img);
 double compute_tresh_max(struct image *img);
 
 void DSES(int nb_img, struct image *image, double treshold, double teta, double      epsilon, double marge);
-
+/*
 struct weakclass {
 	struct HaarF *feat;
 	int t; //threshold
@@ -26,4 +26,4 @@ struct strongclass {
 	struct weakclass *wc;
 	float *alpha;
 	int nb;
-};	
+};	*/
