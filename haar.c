@@ -3,6 +3,7 @@
 # include <SDL.h>
 # include <SDL_image.h>
 # include "haar.h"
+# include "quick_sort.h"
 
 HaarF haar1(HaarF haar, int **M){
 	haar.val = M[haar.x][haar.y] - M[haar.x][haar.y + haar.h] 
@@ -57,10 +58,12 @@ HaarF haar5(HaarF haar, int **M){
 	return haar;
 }
 
+
+int counter = 0, counter0 = 0, counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0;
+
 void HaarFeatures(int **M, HaarF *HaarList)
 {
 	int featureSize[5][2] = {{2,1},{1,2},{3,1},{1,3},{2,2}};	
-	int counter = 0, counter0 = 0, counter1 = 0, counter2 = 0, counter3 = 0, counter4 = 0;
 	HaarF haar;
 	/*haar.x = 0;
 	  haar.y = 0;
@@ -122,4 +125,11 @@ void HaarFeatures(int **M, HaarF *HaarList)
 	//printf("%d \n", counter);
 	printf(" Nb of features: %d \n Features 1: %d \n Features 2: %d \n Features 3: %d \n Features 4: %d \n Features 5: %d \n", counter, counter0, counter1, counter2, counter3, counter4);        
 	//return HaarList;
+
+	// Sort all the features in the Haarlist for one image
+	quick_sort(HaarList,0,counter0);
+	quick_sort(HaarList,counter0 + 1, counter1);
+	quick_sort(HaarList,counter1 + 1, counter2);
+	quick_sort(HaarList,counter2 + 1, counter3);
+	quick_sort(HaarList,counter3 + 1, counter4);
 }

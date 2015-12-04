@@ -15,7 +15,7 @@ void add(char* pathImg , char* pathBdd)
   }
   char* ext = strchr(pathImg,'.');
   if (strcmp(ext,"pgm") || strcmp(ext,"bmp") || strcmp(ext,"jpeg") || strcmp(ext,"jpg") || strcmp(ext,"png")){
-    char *pathmove = "mv %s %s",pathImg,pathBdd;
+    char *pathmove = "mv %s %s",pathImg, pathBdd;
     system(pathmove);
     closedir(testBdd);
   }
