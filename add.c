@@ -15,11 +15,15 @@ void add(char* pathImg , char* pathBdd)
   }
   char* ext = strchr(pathImg,'.');
   if (strcmp(ext,"pgm") || strcmp(ext,"bmp") || strcmp(ext,"jpeg") || strcmp(ext,"jpg") || strcmp(ext,"png")){
-    char *pathmove = "mv %s %s",*pathImg, *pathBdd;
+    char *pathmove = "mv ";
+    strcat(pathmove, pathImg);
+    strcat(pathmove, " ");
+    strcat(pathmove, pathBdd);
     system(pathmove);
-    closedir(testBdd);
+    printf("%s\n",pathmove);
   }
-  printf("Image's format isn't supported \n");
+  else
+    printf("Image's format isn't supported \n");
   closedir(testBdd);
   return;
 }
