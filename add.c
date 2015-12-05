@@ -15,12 +15,8 @@ void add(char* pathImg , char* pathBdd)
   }
   char* ext = strchr(pathImg,'.');
   if (strcmp(ext,"pgm") || strcmp(ext,"bmp") || strcmp(ext,"jpeg") || strcmp(ext,"jpg") || strcmp(ext,"png")){
-    char *pathmove = "mv ";
-    char *pI = pathImg;
-    char *pB = pathBdd;
-    strcpy(pathmove, pI);
-    strcpy(pathmove, " ");
-    strcpy(pathmove, pB);
+    char *pathmove = NULL;
+    sprintf(pathmove,"mv %s %s",pathImg, pathBdd);
     system(pathmove);
     closedir(testBdd);
   }
@@ -28,4 +24,5 @@ void add(char* pathImg , char* pathBdd)
   closedir(testBdd);
   return;
 }
+
       

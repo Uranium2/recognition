@@ -15,11 +15,11 @@ int compute_marge(struct image *img)
 	while(img != NULL)
 	{
 		if(img->pos == 1)
-			if(abs(img->haar->val - treshold) < marge_p)
-				marge_p = abs(img->haar->val - treshold);
+			if(fabs(img->haar->val - treshold) < marge_p)
+				marge_p = fabs(img->haar->val - treshold);
 		if(img->pos == -1)
-			if(abs(img->haar->val - treshold) < marge_n)
-				marge_n = abs(img->haar->val - treshold);
+			if(fabs(img->haar->val - treshold) < marge_n)
+				marge_n = fabs(img->haar->val - treshold);
 	}
 	marge = marge_p + marge_n;
 	return marge;
